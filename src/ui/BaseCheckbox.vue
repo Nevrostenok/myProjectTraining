@@ -1,18 +1,16 @@
 <template>
-    <label class="inline-flex items-center space-x-2 text-sm">
-        <input type="checkbox" :checked="modelValue" @change="$emit('update:modelValue', $event.target.checked)"
-            class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-        <span>{{ label }}</span>
-    </label>
+    <div>
+        <input type="checkbox" :checked="modelValue" @change="onChange" />
+        <label>{{ label }}</label>
+    </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-    modelValue: boolean;
-    label: string;
-}>();
+const props = defineProps<{ label: string; modelValue: boolean }>();
+const emit = defineEmits(['update:modelValue']);
 
-defineEmits<{
-    (e: 'update:modelValue', value: boolean): void;
-}>();
+function onChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    emit('update:modelValue', target.checked);
+}
 </script>
